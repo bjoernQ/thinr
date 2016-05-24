@@ -45,13 +45,13 @@ While the above example is not very exciting you might be able to estimate it's 
 Anything in "inBackground" will be executing on a background thread.
 
 Anything in "onMain" will be executing when - and only when - the component is in a state that is fine for accessing the component.
-Image that "inBackground" can be any time consuming blocking operation accessing the network and hitting the filesystem.
+Imagine that "inBackground" can be any time consuming blocking operation accessing the network and hitting the filesystem.
 
 It's a beautiful replacement for AsyncTask (which it internally uses) when using Java 8.
 
 You can also use it with Java 7 but Java 8 will make your experience much more exciting.
 
-Currently the support for Java 8 is limited to using Jack (see http://developer.android.com/preview/j8-jack.html ) but for sure the complete to0lchain will support Java 8 sooner or later.
+Currently the support for Java 8 is limited to using Jack (see http://developer.android.com/preview/j8-jack.html ) but for sure the complete toolchain will support Java 8 sooner or later.
 
 If you still don't know what this will do for you have a look at other approaches making AsyncTask work (right) for you.
 
@@ -81,13 +81,19 @@ The easiest way to get started is to look at the sample app. It's kept small to 
 
 ## Integrate
 
-This library will be available on JCenter.
+This library is available on JCenter [ ![Download](https://api.bintray.com/packages/bjoernq/maven/thinr/images/download.svg) ](https://bintray.com/bjoernq/maven/thinr/_latestVersion)
+
+Add the dependency to your app and make sure to use the jcenter repository:
+
+```groovy
+    compile 'de.mobilej:thinr:0.0.0'
+```
 
 ## Version History
 
 Version|Description|
 |-------|-----------|
-|0.0.0|initial public release (not yet released)|
+|0.0.0|initial public release|
 
 
 ## What does the name mean?
