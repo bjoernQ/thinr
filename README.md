@@ -1,5 +1,8 @@
 # Thinr
 
+ [ ![Download](https://api.bintray.com/packages/bjoernq/maven/thinr/images/download.svg) ](https://bintray.com/bjoernq/maven/thinr/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Thinr-green.svg?style=true)](https://android-arsenal.com/details/1/3645)
+ 
+ 
 ## About
 
 Thinr is a replacement for AsyncTask. It is a tiny library that makes things like the following possible in a leak free and configuration change aware way:
