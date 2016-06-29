@@ -167,10 +167,16 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
         Field[] functionFields = function.getClass().getDeclaredFields();
         if (functionFields.length > 0) {
             // workaround to not fail during instrumentation
-            if (!(functionFields.length == 1 && "$jacocoData".equals(functionFields[0].getName()))) {
-                System.err.println(Arrays.toString(functionFields));
-                throw new IllegalArgumentException("Don't reference outer variables and fields from Lambdas / nested classes used here." + Arrays.toString(functionFields));
+            if (functionFields.length == 1 && "$jacocoData".equals(functionFields[0].getName())) {
+                return;
             }
+
+            // needed for Retrolambda
+            if (functionFields.length == 1 && "instance".equals(functionFields[0].getName())) {
+                return;
+            }
+
+            throw new IllegalArgumentException("Don't reference outer variables and fields from Lambdas / nested classes used here." + Arrays.toString(functionFields));
         }
     }
 

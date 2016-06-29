@@ -1,1 +1,1 @@
-include ':thinrtest', ':thinr', ':thinrsample'
+include ':thinrtest', ':thinr', ':thinrsample', ':thinrsample_retrolambda'
