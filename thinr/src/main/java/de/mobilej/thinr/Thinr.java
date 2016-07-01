@@ -48,6 +48,7 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
 
     private static HashMap<String, HashMap<String, Thinr>> componentIdToThinrInstances = new HashMap<>();
     private static Map<String, Object> activeComponentIdsToTargets = Collections.synchronizedMap(new HashMap<String, Object>());
+    private static boolean runtimeChecksEnabled = true;
 
     private final Context appCtx;
     private Object currentValue;
@@ -160,6 +161,10 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
      * @param function what to check
      */
     private static void checkValidFunction(final Object function) {
+        if (!Thinr.runtimeChecksEnabled) {
+            return;
+        }
+
         if (function == null) {
             throw new IllegalArgumentException("Don't pass NULL.");
         }
@@ -167,10 +172,16 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
         Field[] functionFields = function.getClass().getDeclaredFields();
         if (functionFields.length > 0) {
             // workaround to not fail during instrumentation
-            if (!(functionFields.length == 1 && "$jacocoData".equals(functionFields[0].getName()))) {
-                System.err.println(Arrays.toString(functionFields));
-                throw new IllegalArgumentException("Don't reference outer variables and fields from Lambdas / nested classes used here." + Arrays.toString(functionFields));
+            if (functionFields.length == 1 && "$jacocoData".equals(functionFields[0].getName())) {
+                return;
             }
+
+            // needed for Retrolambda
+            if (functionFields.length == 1 && "instance".equals(functionFields[0].getName())) {
+                return;
+            }
+
+            throw new IllegalArgumentException("Don't reference outer variables and fields from Lambdas / nested classes used here." + Arrays.toString(functionFields));
         }
     }
 
@@ -445,6 +456,16 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
             }
         }
         return false;
+    }
+
+    /**
+     * Enable / Disable the (somewhat expensive) checks at runtime.
+     * You might want to disable these checks for release builds while enabling them for debug builds.
+     *
+     * @param runtimeChecksEnabled true or false
+     */
+    public static void setRuntimeChecksEnabled(boolean runtimeChecksEnabled) {
+        Thinr.runtimeChecksEnabled = runtimeChecksEnabled;
     }
 
     private static void checkMainThread() {

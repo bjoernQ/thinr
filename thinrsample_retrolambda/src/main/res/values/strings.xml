@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Thinr Sample</string>
+    <string name="button">Press me!</string>
+    <string name="greeting">Hello World!</string>
+    <string name="loading_message">Loading</string>
+    <string name="error_message">Something went wrong. Try again.</string>
+</resources>

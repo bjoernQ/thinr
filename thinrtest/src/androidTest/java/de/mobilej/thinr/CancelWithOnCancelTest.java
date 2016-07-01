@@ -56,13 +56,14 @@ public class CancelWithOnCancelTest {
 
         final Activity[] activityHolder = new Activity[1];
         for (int i = 1; i <= iterations; i++) {
-            final View button = activityUnderTest.findViewById(R.id.button);
+            final View[] button = new View[]{activityUnderTest.findViewById(R.id.button)};
             instrumentation.runOnMainSync(new Runnable() {
                 @Override
                 public void run() {
-                    button.performClick();
+                    button[0].performClick();
                 }
             });
+            button[0] = null;
 
             Activity recreatedActivity = activityUnderTest;
             activityUnderTest = null;
@@ -101,12 +102,14 @@ public class CancelWithOnCancelTest {
             SystemClock.sleep(2500);
             assertEquals(false, recreatedActivity.isDestroyed());
 
-            final TextView text1 = (TextView) recreatedActivity.findViewById(R.id.text);
-            final TextView text2 = (TextView) recreatedActivity.findViewById(R.id.text2);
+            TextView text1 = (TextView) recreatedActivity.findViewById(R.id.text);
+            TextView text2 = (TextView) recreatedActivity.findViewById(R.id.text2);
 
             assertEquals("cancel", text1.getText());
             assertEquals("cancel", text2.getText());
 
+            text1 = null;
+            text2 = null;
 
             // check Activity doesn't leak
             activityUnderTest = null;
