@@ -23,11 +23,11 @@ import org.powermock.reflect.Whitebox;
  * Created by bjoern on 01.07.2016.
  */
 
-public class RuntimeCheckTest {
+public class RuntimeCheckDisabledTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        Thinr.setRuntimeChecksEnabled(true);
+        Thinr.setRuntimeChecksEnabled(false);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class RuntimeCheckTest {
         Whitebox.invokeMethod(Thinr.class, "checkValidFunction", function);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testInavlidValidFunction() throws Exception {
         Object function = new InvalidFunction();
         Whitebox.invokeMethod(Thinr.class, "checkValidFunction", function);
