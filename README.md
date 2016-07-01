@@ -8,7 +8,7 @@
 Thinr is a replacement for AsyncTask. It is a tiny library that makes things like the following possible in a leak free and configuration change aware way:
 
 ```java
-Thinr.task(MainActivity.this, "getQOTD", MainActivity.class, Void.class)
+Thinr.task(getContext(), "getQOTD", MainActivity.class, Void.class)
                         .onMain((target, param) -> {
                             target.textView.setText(target.getApplicationContext().getString(R.string.loading_message));
                             return null;
@@ -37,7 +37,7 @@ Thinr.task(MainActivity.this, "getQOTD", MainActivity.class, Void.class)
                                 target.textView.setText(target.getApplicationContext().getString(R.string.error_message));
                             }
                         })
-                        .execute(null, "MainActivity");
+                        .execute(null, "ComponentID");
 ```
 
 While the above example is not very exciting you might be able to estimate it's value considering it's
@@ -54,7 +54,9 @@ It's a beautiful replacement for AsyncTask (which it internally uses) when using
 
 You can also use it with Java 7 but Java 8 will make your experience much more exciting.
 
-Currently the support for Java 8 is limited to using Jack (see http://developer.android.com/preview/j8-jack.html ) but for sure the complete toolchain will support Java 8 sooner or later.
+Currently the official support for Java 8 is limited to using Jack (see http://developer.android.com/preview/j8-jack.html ) but for sure the complete toolchain will support Java 8 sooner or later.
+
+Additionally RetroLambda is supported starting with version 0.1.0.
 
 If you still don't know what this will do for you have a look at other approaches making AsyncTask work (right) for you.
 
@@ -89,7 +91,7 @@ This library is available on JCenter [ ![Download](https://api.bintray.com/packa
 Add the dependency to your app and make sure to use the jcenter repository:
 
 ```groovy
-    compile 'de.mobilej:thinr:0.0.0'
+    compile 'de.mobilej:thinr:0.1.0'
 ```
 
 ## Version History
@@ -97,7 +99,7 @@ Add the dependency to your app and make sure to use the jcenter repository:
 Version|Description|
 |-------|-----------|
 |0.0.0|initial public release|
-
+|0.1.0|supports RetroLambda, possible to disable runtime checks|
 
 ## What does the name mean?
 
