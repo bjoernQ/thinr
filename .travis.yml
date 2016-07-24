@@ -9,4 +9,4 @@ android:
   - extra-android-m2repository
 jdk: oraclejdk8
 script:
-- "./gradlew clean thinr:assembleDebug  thinrtest:jacocoinstrument thinrtest:testDebugUnitTest thinrtest:jacocoreport"
+- "./gradlew clean thinr:assembleDebug  thinrtest:jacocoinstrument thinrtest:testDebugUnitTest thinrtest:jacocoreport thinrtest:coveralls"
