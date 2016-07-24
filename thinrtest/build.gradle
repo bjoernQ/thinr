@@ -18,6 +18,8 @@ apply plugin: 'com.github.kt3k.coveralls'
 
 coveralls {
     jacocoReportPath = "${rootDir}/build/reports/coverage/jacoco.xml"
+
+    sourceDirs = [ "${rootDir}/thinr/src/main/java" ]
 }
 
 tasks.coveralls {
