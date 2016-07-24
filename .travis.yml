@@ -1,0 +1,12 @@
+language: android
+android:
+  components:
+  - platform-tools
+  - tools
+  - build-tools-23.0.2
+  - build-tools-24.0.0
+  - android-23
+  - extra-android-m2repository
+jdk: oraclejdk8
+script:
+- "./gradlew clean thinr:assembleDebug  thinrtest:jacocoinstrument thinrtest:testDebugUnitTest thinrtest:jacocoreport"

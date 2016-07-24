@@ -1,6 +1,6 @@
 # Thinr
 
- [ ![Download](https://api.bintray.com/packages/bjoernq/maven/thinr/images/download.svg) ](https://bintray.com/bjoernq/maven/thinr/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Thinr-green.svg?style=true)](https://android-arsenal.com/details/1/3645)
+[![Download](https://api.bintray.com/packages/bjoernq/maven/thinr/images/download.svg) ](https://bintray.com/bjoernq/maven/thinr/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Thinr-green.svg?style=true)](https://android-arsenal.com/details/1/3645) [![Build Status](https://travis-ci.org/bjoernQ/thinr.svg?branch=master)](https://travis-ci.org/bjoernQ/thinr) [![License](https://img.shields.io/badge/license-Apache%202-green.svg?style=flat)](https://github.com/bjoernQ/thinr/blob/master/LICENSE.txt)
  
  
 ## About
