@@ -25,6 +25,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -45,6 +46,7 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
     private static final Looper MAIN_LOOPER = Looper.getMainLooper();
     private static final Handler HANDLER = new Handler(MAIN_LOOPER);
     private static final String TAG = "Thinr";
+    private static final List<String> FUNCTION_CLASS_FIELD_WHITE_LIST = Arrays.asList("$jacocoData", "instance");
 
     private static HashMap<String, HashMap<String, Thinr>> componentIdToThinrInstances = new HashMap<>();
     private static Map<String, Object> activeComponentIdsToTargets = Collections.synchronizedMap(new HashMap<String, Object>());
@@ -171,17 +173,11 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
 
         Field[] functionFields = function.getClass().getDeclaredFields();
         if (functionFields.length > 0) {
-            // workaround to not fail during instrumentation
-            if (functionFields.length == 1 && "$jacocoData".equals(functionFields[0].getName())) {
-                return;
+            for (Field functionField : functionFields) {
+                if (!FUNCTION_CLASS_FIELD_WHITE_LIST.contains(functionField.getName())) {
+                    throw new IllegalArgumentException("Don't reference outer variables and fields from Lambdas / nested classes used here." + Arrays.toString(functionFields));
+                }
             }
-
-            // needed for Retrolambda
-            if (functionFields.length == 1 && "instance".equals(functionFields[0].getName())) {
-                return;
-            }
-
-            throw new IllegalArgumentException("Don't reference outer variables and fields from Lambdas / nested classes used here." + Arrays.toString(functionFields));
         }
     }
 
