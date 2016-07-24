@@ -14,6 +14,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'de.mobilej.unmock'
 apply from: '../jacoco.gradle'
+apply plugin: 'com.github.kt3k.coveralls'
+
+coveralls {
+    jacocoReportPath = "${rootDir}/build/reports/coverage/jacoco.xml"
+}
+
+tasks.coveralls {
+    onlyIf { System.env.'CI' }
+}
 
 unMock {
     // URI to download the android-all.jar from. e.g. https://oss.sonatype.org/content/groups/public/org/robolectric/android-all/
