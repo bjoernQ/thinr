@@ -13,6 +13,7 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'de.mobilej.unmock'
+apply from: '../jacoco.gradle'
 
 unMock {
     // URI to download the android-all.jar from. e.g. https://oss.sonatype.org/content/groups/public/org/robolectric/android-all/
@@ -56,6 +57,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            testCoverageEnabled = true
         }
     }
 }
