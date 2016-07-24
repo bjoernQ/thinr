@@ -4,6 +4,8 @@ android:
   - platform-tools
   - tools
   - build-tools-23.0.2
+  - build-tools-24.0.0-rc4
+  - build-tools-24.0.0
   - android-23
   - extra-android-m2repository
 jdk: oraclejdk8
