@@ -8,5 +8,4 @@ android:
   - extra-android-m2repository
 jdk: oraclejdk8
 script:
-- "chmod -x gradlew"
 - "./gradlew clean thinr:assembleDebug  thinrtest:jacocoinstrument thinrtest:testDebugUnitTest thinrtest:jacocoreport"
