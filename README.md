@@ -100,6 +100,7 @@ Version|Description|
 |-------|-----------|
 |0.0.0|initial public release|
 |0.1.0|supports RetroLambda, possible to disable runtime checks|
+|0.1.1|runtime checks now allow RetroLambda and Jacoco at the same time|
 
 ## What does the name mean?
 
