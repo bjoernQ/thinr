@@ -30,18 +30,6 @@ import org.objectweb.asm.tree.MethodNode;
 import java.util.EnumSet;
 import java.util.List;
 
-/*
-siehe go.bat -> kopiert das als lint-check, für weiter siehe https://engineering.linkedin.com/android/writing-custom-lint-checks-gradle
-
-testen dann erstmal in thinrsample, ..\gradlew lintDebug
-
-nicht vergessen aus ~/.android/lint die JAR zu löschen
-
- */
-
-
-// TEST: copy jar to ~/.Android/lint
-
 /**
  * Lint detector to detect wrong usage of lambdas together with Thinr.
  */
@@ -64,7 +52,8 @@ public class ThinrDetector extends Detector implements Detector.ClassScanner {
             "Lde/mobilej/thinr/ThinrFunctionOnMain;",
             "Lde/mobilej/thinr/ThinrFunctionInBackground;",
             "Lde/mobilej/thinr/ThinrFinalFunctionOnMain;",
-            "Lde/mobilej/thinr/ThinrFinalFunctionInBackground;"
+            "Lde/mobilej/thinr/ThinrFinalFunctionInBackground;",
+            "Lde/mobilej/thinr/ThinrOnCancelFunctionOnMain;"
     };
 
     @Override
@@ -84,7 +73,7 @@ public class ThinrDetector extends Detector implements Detector.ClassScanner {
                         for (String toCheck : TO_CHECK) {
                             if (desc.endsWith(toCheck) && !desc.startsWith("()")) {
                                 context.report(ISSUE,
-                                        context.getLocation(method, classNode),
+                                        context.getLocation(method, classNode), // flags the surrounding method as a problem
                                         "Don't access the outer scope from Lambdas passed to Thinr.");
                             }
                         }
