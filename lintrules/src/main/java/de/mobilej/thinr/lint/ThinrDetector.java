@@ -37,7 +37,7 @@ public class ThinrDetector extends Detector implements Detector.ClassScanner {
 
     public static final Issue ISSUE = Issue.create(
             "ThinrDontLeak",
-            "Finds usages of Thinr which will result in leaking",
+            "Lambda referencing the outer scope will create a leak",
             "Lambdas used in Thinr are not allowed to access the outer scope.",
             Category.CORRECTNESS,
             6,
