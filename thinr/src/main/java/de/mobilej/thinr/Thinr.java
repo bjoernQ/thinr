@@ -77,6 +77,7 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
      * @param name               id of the task
      * @param targetType         the target type (e.g. the Activity, Fragment etc.)
      * @param paramAndReturnType the type used for the sub-task's parameter and return value    @return a job
+     * @return a builder to construct a Thinr task
      */
     @SuppressWarnings("unused")
     @MainThread
