@@ -22,21 +22,59 @@ import android.support.annotation.MainThread;
  */
 public interface ThinrBuilder<T, P, I> {
 
+    /**
+     * Adds a function to be executed in the background.
+     *
+     * @param returnType explicit return type
+     * @param function   the function
+     * @return the job for further configuration
+     */
     @MainThread
     <R> ThinrBuilder<T, R, I> inBackground(Class<R> returnType, ThinrFunctionInBackground<R, ? super P> function);
 
+    /**
+     * Adds a function to be executed in the background.
+     *
+     * @param function the function
+     * @return the job for further configuration
+     */
     @MainThread
     <R> ThinrBuilder<T, R, I> inBackground(ThinrFunctionInBackground<R, ? super P> function);
 
+    /**
+     * Adds a function to end this task in the background.
+     *
+     * @param function the function
+     * @return the job for further configuration
+     */
     @MainThread
     <R> ThinrFinalBuilder<T, R, I> endsInBackground(ThinrFinalFunctionInBackground<? super P> function);
 
+    /**
+     * Adds a function to be executed on main.
+     *
+     * @param returnType explicit return type
+     * @param function   the function
+     * @return the job for further configuration
+     */
     @MainThread
     <R> ThinrBuilder<T, R, I> onMain(Class<R> returnType, ThinrFunctionOnMain<R, ? super T, ? super P> function);
 
+    /**
+     * Adds a function to be executed on main.
+     *
+     * @param function the function
+     * @return the job for further configuration
+     */
     @MainThread
     <R> ThinrBuilder<T, R, I> onMain(ThinrFunctionOnMain<R, ? super T, ? super P> function);
 
+    /**
+     * Adds a function to be executed on main as the last element.
+     *
+     * @param function the function
+     * @return the job for further configuration
+     */
     @MainThread
     <R> ThinrFinalBuilder<T, R, I> endsOnMain(ThinrFinalFunctionOnMain<? super T, ? super P> function);
 

@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.lang.reflect.Field;
@@ -81,7 +82,7 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
      */
     @SuppressWarnings("unused")
     @MainThread
-    public static <X, Z> ThinrBuilder<X, Z, Z> task(Context context, final String name, final Class<X> targetType, final Class<Z> paramAndReturnType) {
+    public static <X, Z> ThinrBuilder<X, Z, Z> task(@NonNull Context context, @NonNull final String name, @NonNull final Class<X> targetType, @NonNull final Class<Z> paramAndReturnType) {
         checkMainThread();
 
         Thinr<X, Z, Z> thinr = new Thinr<>(context.getApplicationContext());
@@ -89,12 +90,6 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
         return thinr;
     }
 
-    /**
-     * Adds a function to be executed in the background.
-     *
-     * @param function the function
-     * @return the job for further configuration
-     */
     @Override
     @SuppressWarnings("unchecked")
     @MainThread
@@ -119,12 +114,6 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
         return (Thinr<T, R, I>) this;
     }
 
-    /**
-     * Adds a function to be executed on the main thread.
-     *
-     * @param function the function to be executed on the main thread
-     * @return the job for further configuration
-     */
     @Override
     @SuppressWarnings("unchecked")
     @MainThread
@@ -182,13 +171,6 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
         }
     }
 
-    /**
-     * Hands over this job to be executed by the framework.
-     *
-     * @param param       the start parameter of the flow
-     * @param componentId the id of the component to guard the execution
-     * @return true if the flow is submitted to be processed, false otherwise (i.e. there is currently a flow with the same id and component)
-     */
     @Override
     @MainThread
     public boolean execute(final I param, final String componentId) {
@@ -377,7 +359,7 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
      * @param componentId id of the component
      */
     @MainThread
-    public static void onPause(final String componentId) {
+    public static void onPause(@NonNull final String componentId) {
         checkMainThread();
 
         activeComponentIdsToTargets.remove(componentId);
@@ -393,7 +375,7 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
      * @param target      the target to be used
      */
     @MainThread
-    public static void onResume(final String componentId, final Object target) {
+    public static void onResume(@NonNull final String componentId, @NonNull final Object target) {
         checkMainThread();
 
         activeComponentIdsToTargets.put(componentId, target);
@@ -418,7 +400,7 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
      * @param componentId id of the component for the job
      */
     @MainThread
-    public static void cancel(final String jobId, final String componentId) {
+    public static void cancel(@NonNull final String jobId, @NonNull final String componentId) {
         checkMainThread();
 
         HashMap<String, Thinr> instances = componentIdToThinrInstances.get(componentId);
@@ -442,7 +424,7 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
      * @return true if there is a job, false otherwise
      */
     @MainThread
-    public static boolean isRunning(final String jobId, final String componentId) {
+    public static boolean isRunning(@NonNull final String jobId, @NonNull final String componentId) {
         checkMainThread();
 
         HashMap<String, Thinr> instances = componentIdToThinrInstances.get(componentId);

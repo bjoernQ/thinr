@@ -14,12 +14,17 @@
 package de.mobilej.thinr;
 
 /**
- * Passes to background functions.
+ * Passed to background functions.
  * <p>
  * Created by bjoern on 17.05.2016.
  */
 public interface FlowControl {
 
+    /**
+     * Query if this job has been canceled.
+     *
+     * @return true if the job is already canceled
+     */
     boolean isCancelled();
 
 }

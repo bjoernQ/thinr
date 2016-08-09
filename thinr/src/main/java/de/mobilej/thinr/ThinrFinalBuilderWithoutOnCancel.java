@@ -22,6 +22,13 @@ import android.support.annotation.MainThread;
  */
 public interface ThinrFinalBuilderWithoutOnCancel<T, P, I> {
 
+    /**
+     * Starts the execution of the job.
+     *
+     * @param param       the parameter passed to the first function
+     * @param componentId Id to identify this job (e.g. to cancel it)
+     * @return true if the job will execute, false if another job with the same id is already running
+     */
     @MainThread
     boolean execute(I param, String componentId);
 
