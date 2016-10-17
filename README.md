@@ -91,7 +91,7 @@ This library is available on JCenter [ ![Download](https://api.bintray.com/packa
 Add the dependency to your app and make sure to use the jcenter repository:
 
 ```groovy
-    compile 'de.mobilej:thinr:0.2.0'
+    compile 'de.mobilej:thinr:0.2.1'
 ```
 
 ## Version History
@@ -102,6 +102,7 @@ Version|Description|
 |0.1.0|supports RetroLambda, possible to disable runtime checks|
 |0.1.1|runtime checks now allow RetroLambda and Jacoco at the same time|
 |0.2.0|fixed problem with InstantRun, added a Lint check, added more JavaDoc|
+|0.2.1|whitelist serialVersionUID as a safe field for Lambdas|
 
 ## What does the name mean?
 
