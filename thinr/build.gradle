@@ -20,7 +20,7 @@ version='0.2.0'
 publish {
     groupId = 'de.mobilej'
     artifactId = 'thinr'
-    publishVersion = '0.2.1'
+    publishVersion = '0.2.2'
     desc = 'A simple, life-cycle aware replacement for AsyncTask with beautiful code when using Java8'
     website = 'https://github.com/bjoernQ/thinr'
 }

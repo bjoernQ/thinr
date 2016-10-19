@@ -103,6 +103,7 @@ Version|Description|
 |0.1.1|runtime checks now allow RetroLambda and Jacoco at the same time|
 |0.2.0|fixed problem with InstantRun, added a Lint check, added more JavaDoc|
 |0.2.1|whitelist serialVersionUID as a safe field for Lambdas|
+|0.2.2|whitelist serialVersionUID as a safe field for Lambdas|
 
 ## What does the name mean?
 
