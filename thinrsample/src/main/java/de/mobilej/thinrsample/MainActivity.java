@@ -27,6 +27,8 @@ import okhttp3.Response;
 
 public class MainActivity extends Activity {
 
+    public static final String URL = "http://api.icndb.com/jokes/random";
+
     private TextView textView;
 
     @Override
@@ -50,7 +52,7 @@ public class MainActivity extends Activity {
                                     OkHttpClient client = new OkHttpClient();
 
                                     Request request = new Request.Builder()
-                                            .url("http://api.icndb.com/jokes/random")
+                                            .url(URL)
                                             .build();
 
                                     try {
