@@ -15,25 +15,30 @@ package de.mobilej.thinr.lint;
 
 import com.android.annotations.NonNull;
 import com.android.tools.lint.detector.api.Category;
-import com.android.tools.lint.detector.api.ClassContext;
 import com.android.tools.lint.detector.api.Detector;
 import com.android.tools.lint.detector.api.Implementation;
 import com.android.tools.lint.detector.api.Issue;
+import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
 import com.android.tools.lint.detector.api.Severity;
+import com.intellij.psi.JavaElementVisitor;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiExpressionList;
+import com.intellij.psi.PsiField;
+import com.intellij.psi.PsiLambdaExpression;
+import com.intellij.psi.PsiLocalVariable;
+import com.intellij.psi.PsiMethodCallExpression;
+import com.intellij.psi.PsiParameter;
+import com.intellij.psi.PsiReferenceExpression;
 
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.InsnList;
-import org.objectweb.asm.tree.InvokeDynamicInsnNode;
-import org.objectweb.asm.tree.MethodNode;
-
-import java.util.EnumSet;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Lint detector to detect wrong usage of lambdas together with Thinr.
  */
-public class ThinrDetector extends Detector implements Detector.ClassScanner {
+public class ThinrDetector extends Detector implements Detector.JavaPsiScanner {
 
     public static final Issue ISSUE = Issue.create(
             "ThinrDontLeak",
@@ -44,42 +49,98 @@ public class ThinrDetector extends Detector implements Detector.ClassScanner {
             Severity.ERROR,
             new Implementation(
                     ThinrDetector.class,
-                    EnumSet.of(Scope.CLASS_FILE)
+                    Scope.JAVA_FILE_SCOPE
             )
     );
 
-    private static final String[] TO_CHECK = {
-            "Lde/mobilej/thinr/ThinrFunctionOnMain;",
-            "Lde/mobilej/thinr/ThinrFunctionInBackground;",
-            "Lde/mobilej/thinr/ThinrFinalFunctionOnMain;",
-            "Lde/mobilej/thinr/ThinrFinalFunctionInBackground;",
-            "Lde/mobilej/thinr/ThinrOnCancelFunctionOnMain;"
-    };
+    @Override
+    public List<Class<? extends PsiElement>> getApplicablePsiTypes() {
+        List<Class<? extends PsiElement>> res = new ArrayList<>();
+        res.add(PsiLambdaExpression.class);
+        return res;
+        //return Collections.singletonList(PsiLambdaExpression.class);
+    }
 
     @Override
-    public void checkClass(@NonNull ClassContext context, @NonNull ClassNode classNode) {
-        List methods = classNode.methods;
-        for (Object methodObject : methods) {
-            MethodNode method = (MethodNode) methodObject;
+    public JavaElementVisitor createPsiVisitor(@NonNull final JavaContext context) {
+        return new JavaElementVisitor() {
+            @Override
+            public void visitLambdaExpression(PsiLambdaExpression expression) {
 
-            InsnList inst = method.instructions;
-            for (int i = 0; i < inst.size(); i++) {
-                // CHECK LAMBDA CALLS
-                if (inst.get(i) instanceof InvokeDynamicInsnNode) {
-                    InvokeDynamicInsnNode invokeDynInsnNode = (InvokeDynamicInsnNode) inst.get(i);
+                if (!(expression.getParent() instanceof PsiExpressionList)) {
+                    return;
+                }
 
-                    if ("function".equals(invokeDynInsnNode.name)) {
-                        String desc = invokeDynInsnNode.desc;
-                        for (String toCheck : TO_CHECK) {
-                            if (desc.endsWith(toCheck) && !desc.startsWith("()")) {
-                                context.report(ISSUE,
-                                        context.getLocation(method, classNode), // flags the surrounding method as a problem
-                                        "Don't access the outer scope from Lambdas passed to Thinr.");
+                PsiExpressionList exprList = (PsiExpressionList) expression.getParent();
+                if (!(exprList.getParent() instanceof PsiMethodCallExpression)) {
+                    return;
+                }
+                PsiMethodCallExpression call = (PsiMethodCallExpression) exprList.getParent();
+
+                if (call.getType() == null) {
+                    return;
+                }
+
+                String callType = call.getType().getCanonicalText();
+
+                if (!callType.startsWith("de.mobilej.thinr.Thinr")) {
+                    return;
+                }
+
+                markLeakSuspects(expression, expression, context);
+            }
+        };
+    }
+
+    private void markLeakSuspects(PsiElement element, PsiElement lambdaBody, @NonNull final JavaContext context) {
+        if (element instanceof PsiReferenceExpression) {
+            PsiReferenceExpression ref = (PsiReferenceExpression) element;
+
+            if (ref.getQualifierExpression() == null) {
+
+                PsiElement res = ref.resolve();
+                if (!(res instanceof PsiParameter)) {
+                    if (!(res instanceof PsiClass)) {
+
+                        boolean error = false;
+                        if (res instanceof PsiLocalVariable) {
+                            PsiLocalVariable lVar = (PsiLocalVariable) res;
+                            if (!isParent(lambdaBody, lVar.getParent())) {
+                                error = true;
                             }
+                        }
+
+                        if (res instanceof PsiField) {
+                            error = true;
+                        }
+
+                        if (error) {
+                            context.report(ISSUE, element, context.getNameLocation(element), "Possible leak");
                         }
                     }
                 }
             }
         }
+
+        for (PsiElement psiElement : element.getChildren()) {
+            markLeakSuspects(psiElement, lambdaBody, context);
+        }
     }
+
+    private boolean isParent(PsiElement lambdaBody, PsiElement element) {
+        if (element == lambdaBody) {
+            return true;
+        }
+
+        if (element.getParent() != null) {
+            if (element.getParent() == lambdaBody) {
+                return true;
+            } else {
+                return isParent(lambdaBody, element.getParent());
+            }
+        }
+
+        return false;
+    }
+
 }
