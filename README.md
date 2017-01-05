@@ -91,7 +91,7 @@ This library is available on JCenter [ ![Download](https://api.bintray.com/packa
 Add the dependency to your app and make sure to use the jcenter repository:
 
 ```groovy
-    compile 'de.mobilej:thinr:0.2.3'
+    compile 'de.mobilej:thinr:0.2.4'
 ```
 
 ## Version History
@@ -105,6 +105,7 @@ Version|Description|
 |0.2.1|whitelist serialVersionUID as a safe field for Lambdas|
 |0.2.2|whitelist serialVersionUID as a safe field for Lambdas|
 |0.2.3|Improved Lint check|
+|0.2.4|Improved Lint check (less false positives)|
 
 ## What does the name mean?
 

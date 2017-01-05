@@ -29,6 +29,8 @@ import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiLambdaExpression;
 import com.intellij.psi.PsiLocalVariable;
 import com.intellij.psi.PsiMethodCallExpression;
+import com.intellij.psi.PsiModifier;
+import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.PsiReferenceExpression;
 
@@ -111,7 +113,13 @@ public class ThinrDetector extends Detector implements Detector.JavaPsiScanner {
                         }
 
                         if (res instanceof PsiField) {
-                            error = true;
+                            PsiField field = (PsiField) res;
+                            final PsiModifierList modifierList = field.getModifierList();
+                            if (modifierList == null) {
+                                error = true;
+                            } else if (!modifierList.hasExplicitModifier(PsiModifier.STATIC)) {
+                                error = true;
+                            }
                         }
 
                         if (error) {
