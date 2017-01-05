@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.mobilej.thinrsample.MainActivity"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="73dp">
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="de.mobilej.thinrsample.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,18 +14,7 @@
         android:text="@string/greeting"
         android:id="@+id/textView"
         android:gravity="center_horizontal"
-        android:freezesText="true"
-        tools:layout_editor_absoluteX="154dp"
-        tools:layout_editor_absoluteY="201dp"
-        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintTop_toTopOf="@+id/activity_main"
-        tools:layout_constraintTop_creator="0"
-        app:layout_constraintRight_toRightOf="@+id/activity_main"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_main"
-        tools:layout_constraintBottom_creator="0"
-        app:layout_constraintVertical_bias="0.4" />
+        android:freezesText="true" />
 
     <Button
         android:text="@string/button"
@@ -34,15 +22,6 @@
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="153dp"
         tools:layout_editor_absoluteY="254dp"
-        android:id="@+id/button"
-        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintTop_toTopOf="@+id/activity_main"
-        tools:layout_constraintTop_creator="0"
-        app:layout_constraintRight_toRightOf="@+id/activity_main"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_main"
-        tools:layout_constraintBottom_creator="0"
-        app:layout_constraintVertical_bias="0.54" />
+        android:id="@+id/button" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
