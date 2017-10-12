@@ -13,6 +13,7 @@
 
 package de.mobilej.thinr;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -29,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -64,6 +66,7 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
     private Runnable postedRunnable;
     private AsyncTask<Object, Void, Object> startedAsyncTask;
     private ThinrOnCancelFunctionOnMain cancelFunction;
+    private Executor executor;
 
     private Thinr(Context appCtx) {
         this.appCtx = appCtx;
@@ -174,8 +177,15 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
     @Override
     @MainThread
     public boolean execute(final I param, final String componentId) {
+        return execute(param, componentId, null);
+    }
+
+    @Override
+    @MainThread
+    public boolean execute(final I param, final String componentId, Executor executor) {
         checkMainThread();
 
+        this.executor = executor;
         this.componentId = componentId;
         this.currentValue = param;
         HashMap<String, Thinr> instancesForComponent = componentIdToThinrInstances.get(componentId);
@@ -226,6 +236,7 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     @SuppressWarnings("unchecked")
     private void doNextOperationInBackground(final ThinrFunction nextOperation) {
         operationRunning = true;
@@ -278,7 +289,11 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
         };
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            startedAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, currentValue);
+            if(executor!=null){
+                startedAsyncTask.executeOnExecutor(executor, currentValue);
+            } else {
+                startedAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, currentValue);
+            }
         } else {
             startedAsyncTask.execute(currentValue);
         }

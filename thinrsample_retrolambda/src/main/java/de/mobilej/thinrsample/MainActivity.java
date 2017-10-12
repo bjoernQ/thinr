@@ -20,12 +20,17 @@ import android.widget.TextView;
 
 import org.json.JSONObject;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 import de.mobilej.thinr.Thinr;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends Activity {
+
+    private static final Executor exec = Executors.newFixedThreadPool(10);
 
     private TextView textView;
 
@@ -69,7 +74,7 @@ public class MainActivity extends Activity {
                                 target.textView.setText(target.getApplicationContext().getString(R.string.error_message));
                             }
                         })
-                        .execute(null, "MainActivity");
+                        .execute(null, "MainActivity", exec);
             }
         });
     }
