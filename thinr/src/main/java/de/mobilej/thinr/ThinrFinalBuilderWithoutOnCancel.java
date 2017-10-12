@@ -15,6 +15,8 @@ package de.mobilej.thinr;
 
 import android.support.annotation.MainThread;
 
+import java.util.concurrent.Executor;
+
 /**
  * Builder Interface
  * <p>
@@ -31,5 +33,16 @@ public interface ThinrFinalBuilderWithoutOnCancel<T, P, I> {
      */
     @MainThread
     boolean execute(I param, String componentId);
+
+    /**
+     * Starts the execution of the job.
+     *
+     * @param param       the parameter passed to the first function
+     * @param componentId Id to identify this job (e.g. to cancel it)
+     * @param executor the executor to use for background operations
+     * @return true if the job will execute, false if another job with the same id is already running
+     */
+    @MainThread
+    boolean execute(I param, String componentId,Executor executor);
 
 }
