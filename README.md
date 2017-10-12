@@ -91,7 +91,7 @@ This library is available on JCenter [ ![Download](https://api.bintray.com/packa
 Add the dependency to your app and make sure to use the jcenter repository:
 
 ```groovy
-    compile 'de.mobilej:thinr:0.2.4'
+    compile 'de.mobilej:thinr:0.2.5'
 ```
 
 ## Version History
@@ -106,18 +106,12 @@ Version|Description|
 |0.2.2|whitelist serialVersionUID as a safe field for Lambdas|
 |0.2.3|Improved Lint check|
 |0.2.4|Improved Lint check (less false positives)|
-
-## What does the name mean?
-
-Thinr means THis Is Not Reactive .... it's name came to my mind because in the past there were developers telling us the answer to every single challenge in Android development is reactive programming.
-
-While it might be a good way for you depending on your needs I really doubt it's a good idea to switch paradigms just to workaround some very special issues.
-Additionally "thinner" means smaller and leaner - which pretty much matches what I am expecting from this.
+|0.2.5|You can specify the executor for background operations now|
 
 ## License
 
 ```
-Copyright 2016 Björn Quentin
+Copyright 2016,2017 Björn Quentin
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

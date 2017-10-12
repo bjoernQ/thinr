@@ -15,12 +15,12 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
 group='de.mobilej'
-version='0.2.4'
+version='0.2.5'
 
 publish {
     groupId = 'de.mobilej'
     artifactId = 'thinr'
-    publishVersion = '0.2.4'
+    publishVersion = '0.2.5'
     desc = 'A simple, life-cycle aware replacement for AsyncTask with beautiful code when using Java8'
     website = 'https://github.com/bjoernQ/thinr'
 }
