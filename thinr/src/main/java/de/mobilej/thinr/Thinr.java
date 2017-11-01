@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
     private static final Looper MAIN_LOOPER = Looper.getMainLooper();
     private static final Handler HANDLER = new Handler(MAIN_LOOPER);
     private static final String TAG = "Thinr";
-    private static final List<String> FUNCTION_CLASS_FIELD_WHITE_LIST = Arrays.asList("$jacocoData", "instance", "$change", "serialVersionUID");
+    private static final List<String> FUNCTION_CLASS_FIELD_WHITE_LIST = new ArrayList<>(Arrays.asList("$jacocoData", "instance", "$change", "serialVersionUID","$instance"));
 
     private static HashMap<String, HashMap<String, Thinr>> componentIdToThinrInstances = new HashMap<>();
     private static Map<String, Object> activeComponentIdsToTargets = Collections.synchronizedMap(new HashMap<String, Object>());
@@ -460,6 +461,15 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
      */
     public static void setRuntimeChecksEnabled(boolean runtimeChecksEnabled) {
         Thinr.runtimeChecksEnabled = runtimeChecksEnabled;
+    }
+
+    /**
+     * Adds a method to the whitelist. Used when setRuntimeChecksEnabled(true)
+     *
+     * @param methodName name of the method
+     */
+    public static void addMethodToWhiteList(String methodName) {
+        Thinr.FUNCTION_CLASS_FIELD_WHITE_LIST.add(methodName);
     }
 
     private static void checkMainThread() {

@@ -107,6 +107,7 @@ Version|Description|
 |0.2.3|Improved Lint check|
 |0.2.4|Improved Lint check (less false positives)|
 |0.2.5|You can specify the executor for background operations now|
+|0.2.6|No problems with Android Gradle plugin 3.0.0|
 
 ## License
 
