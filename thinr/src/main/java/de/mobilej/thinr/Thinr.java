@@ -50,7 +50,7 @@ public final class Thinr<T, P, I> implements ThinrBuilder<T, P, I>, ThinrFinalBu
     private static final Looper MAIN_LOOPER = Looper.getMainLooper();
     private static final Handler HANDLER = new Handler(MAIN_LOOPER);
     private static final String TAG = "Thinr";
-    private static final List<String> FUNCTION_CLASS_FIELD_WHITE_LIST = new ArrayList<>(Arrays.asList("$jacocoData", "instance", "$change", "serialVersionUID","$instance"));
+    private static final List<String> FUNCTION_CLASS_FIELD_WHITE_LIST = new ArrayList<>(Arrays.asList("$jacocoData", "instance", "$change", "serialVersionUID","$instance", "INSTANCE"));
 
     private static HashMap<String, HashMap<String, Thinr>> componentIdToThinrInstances = new HashMap<>();
     private static Map<String, Object> activeComponentIdsToTargets = Collections.synchronizedMap(new HashMap<String, Object>());
