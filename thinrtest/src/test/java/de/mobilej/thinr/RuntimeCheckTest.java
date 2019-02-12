@@ -54,6 +54,13 @@ public class RuntimeCheckTest {
         Whitebox.invokeMethod(Thinr.class, "checkValidFunction", function);
     }
 
+    @Test
+    public void testAddMethodToWhitelist() throws Exception {
+        Thinr.addMethodToWhiteList("whitelist");
+        Object function = new NewWhitelistFunction();
+        Whitebox.invokeMethod(Thinr.class, "checkValidFunction", function);
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void testInavlidValidFunction() throws Exception {
         Object function = new InvalidFunction();
@@ -71,6 +78,10 @@ public class RuntimeCheckTest {
 
     public static class ValidLambdaFunction {
         public ValidLambdaFunction INSTANCE;
+    }
+
+    public static class NewWhitelistFunction {
+        public NewWhitelistFunction whitelist;
     }
 
     public static class ValidFunction {
