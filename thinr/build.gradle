@@ -18,6 +18,7 @@ group='de.mobilej'
 version='0.2.7'
 
 publish {
+    userOrg = 'bjoernq'
     groupId = 'de.mobilej'
     artifactId = 'thinr'
     publishVersion = '0.2.7'
