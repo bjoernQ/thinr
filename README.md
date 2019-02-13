@@ -91,7 +91,7 @@ This library is available on JCenter [ ![Download](https://api.bintray.com/packa
 Add the dependency to your app and make sure to use the jcenter repository:
 
 ```groovy
-    compile 'de.mobilej:thinr:0.2.5'
+    compile 'de.mobilej:thinr:0.2.7'
 ```
 
 ## Version History
@@ -108,6 +108,7 @@ Version|Description|
 |0.2.4|Improved Lint check (less false positives)|
 |0.2.5|You can specify the executor for background operations now|
 |0.2.6|No problems with Android Gradle plugin 3.0.0|
+|0.2.7|No problems with Android Gradle plugin 3.2.0|
 
 ## License
 

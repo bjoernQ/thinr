@@ -11,27 +11,27 @@
  *    limitations under the License.
  */
 
-apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.android.library'
 
 group='de.mobilej'
-version='0.2.6'
+version='0.2.7'
 
 publish {
     groupId = 'de.mobilej'
     artifactId = 'thinr'
-    publishVersion = '0.2.6'
+    publishVersion = '0.2.7'
     desc = 'A simple, life-cycle aware replacement for AsyncTask with beautiful code when using Java8'
     website = 'https://github.com/bjoernQ/thinr'
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 26
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 23
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }
@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-annotations:27.0.0'
+    implementation 'com.android.support:support-annotations:27.0.0'
 }
 
 configurations {

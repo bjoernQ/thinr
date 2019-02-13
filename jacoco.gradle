@@ -26,7 +26,7 @@ task(jacocoinstrument) << {
         }
 
         jacocoinstrument(destdir: "${rootDir}/thinrtest/build/intermediates/jacocoinstrumented") {
-            fileset(dir: "${rootDir}/thinr/build/intermediates/classes/debug/")
+            fileset(dir: "${rootDir}/thinr/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes")
         }
     }
 }
@@ -49,7 +49,7 @@ task(jacocoreport) << {
             structure(name: 'Thinr') {
 
                 classfiles {
-                    fileset (dir: "${rootDir}/thinr/build/intermediates/classes/debug"){
+                    fileset (dir: "${rootDir}/thinr/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes"){
                         exclude(name: '**/lib/**')
                     }
                 }
